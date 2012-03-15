@@ -26,6 +26,11 @@
 
         <!-- Dependance pour les tests -->
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+			<scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>jdepend</groupId>
             <artifactId>jdepend</artifactId>
             <scope>test</scope>
