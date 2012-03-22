@@ -9,8 +9,7 @@ import java.util.ResourceBundle;
 public class TranslationManager {
     public static final String TRANSLATION_MANAGER_PROPERTY = "TranslationManager";
 
-    private Map<Language, List<ResourceBundle>> languageToBundles =
-          new HashMap<Language, List<ResourceBundle>>();
+    private Map<Language, List<ResourceBundle>> languageToBundles = new HashMap<Language, List<ResourceBundle>>();
 
 
     public void addBundle(ResourceBundle resourceBundle, Language language) {
@@ -27,6 +26,19 @@ public class TranslationManager {
 
     public void addBundle(String baseName, Language language) {
         addBundle(ResourceBundle.getBundle(baseName, language.getLocale()), language);
+    }
+
+
+    public void addBundleOnlyIfNeeded(String baseName, Language language, String key) {
+        try {
+            translate(key, language);
+        }
+        catch (IllegalArgumentException e) {
+            addBundle(baseName, language);
+        }
+        catch (MissingResourceException e) {
+            addBundle(baseName, language);
+        }
     }
 
 
