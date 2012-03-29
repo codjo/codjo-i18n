@@ -1,8 +1,7 @@
 package net.codjo.i18n.gui;
-import net.codjo.i18n.common.Language;
-import net.codjo.i18n.common.TranslationManager;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import net.codjo.i18n.common.Language;
+import net.codjo.i18n.common.TranslationManager;
 import org.apache.log4j.Logger;
 
 public class TranslationNotifier {
@@ -98,7 +99,7 @@ public class TranslationNotifier {
         while (itobj.hasNext()) {
             Internationalizable internationalizable = itobj.next();
             if (WeakInternationalizable.class.isInstance(internationalizable)) {
-                if (!((WeakInternationalizable) internationalizable).isReferenced()) {
+                if (!((WeakInternationalizable)internationalizable).isReferenced()) {
                     itobj.remove();
                     objectsRemoved++;
                 }
@@ -155,6 +156,11 @@ public class TranslationNotifier {
 
     public void addInternationalizableComponent(JInternalFrame internalFrame, String key) {
         addInternationalizableComponent(new InternationalizableJInternalFrame(key, internalFrame));
+    }
+
+
+    public void addInternationalizableComponent(Dialog dialog, String key) {
+        addInternationalizableComponent(new InternationalizableDialog(key, dialog));
     }
 
 

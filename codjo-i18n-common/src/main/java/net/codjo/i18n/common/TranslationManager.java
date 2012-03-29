@@ -2,6 +2,7 @@ package net.codjo.i18n.common;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -9,8 +10,7 @@ import java.util.ResourceBundle;
 public class TranslationManager {
     public static final String TRANSLATION_MANAGER_PROPERTY = "TranslationManager";
 
-    private Map<Language, List<ResourceBundle>> languageToBundles =
-          new HashMap<Language, List<ResourceBundle>>();
+    private Map<Language, List<ResourceBundle>> languageToBundles = new HashMap<Language, List<ResourceBundle>>();
 
 
     public void addBundle(ResourceBundle resourceBundle, Language language) {
@@ -26,7 +26,26 @@ public class TranslationManager {
 
 
     public void addBundle(String baseName, Language language) {
-        addBundle(ResourceBundle.getBundle(baseName, language.getLocale()), language);
+        // Hack: this is strange but ResourceBundle.getBundle takes into account the default locale
+        // instead of the locale passed as a parameter on Unix-side only...
+        Locale oldLocale = Locale.getDefault();
+        Locale.setDefault(language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle(baseName, language.getLocale());
+        addBundle(bundle, language);
+        Locale.setDefault(oldLocale);
+    }
+
+
+    public void addBundleOnlyIfNeeded(String baseName, Language language, String key) {
+        try {
+            translate(key, language);
+        }
+        catch (IllegalArgumentException e) {
+            addBundle(baseName, language);
+        }
+        catch (MissingResourceException e) {
+            addBundle(baseName, language);
+        }
     }
 
 
