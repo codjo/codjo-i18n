@@ -1,9 +1,10 @@
 package net.codjo.i18n.common;
 import java.util.ListResourceBundle;
 import java.util.MissingResourceException;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import org.junit.Test;
 /**
  *
  */
@@ -84,6 +85,15 @@ public class TranslationManagerTest {
         assertEquals("Etiquette", translator.translate("TagKey", Language.FR));
         assertEquals("Field", translator.translate("FieldKey", Language.EN));
         assertEquals("Champ", translator.translate("FieldKey", Language.FR));
+    }
+
+
+    @Test
+    public void test_hasKeyResourceBundle() throws Exception {
+        TranslationManager translator = new TranslationManager();
+        translator.addBundle(new MyFrenchResources(), Language.FR);
+        assertEquals(true, translator.hasKey("OkKey", Language.FR));
+        assertEquals(false, translator.hasKey("UnknownKey", Language.FR));
     }
 
 
