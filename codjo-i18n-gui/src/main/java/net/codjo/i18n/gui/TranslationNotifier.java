@@ -10,13 +10,14 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import net.codjo.i18n.common.Language;
 import net.codjo.i18n.common.TranslationManager;
 import org.apache.log4j.Logger;
 
 public class TranslationNotifier {
-    private static final Logger LOG = Logger.getLogger(TranslationNotifier.class);
+    static final Logger LOG = Logger.getLogger(TranslationNotifier.class);
     public static final String TRANSLATION_NOTIFIER_PROPERTY = "TranslationNotifier";
 
     private List<Internationalizable> internationalizableObjects = new ArrayList<Internationalizable>();
@@ -146,6 +147,11 @@ public class TranslationNotifier {
 
     public void addInternationalizableComponent(JPanel panel, String key) {
         addInternationalizableComponent(new InternationalizableJPanel(key, panel));
+    }
+
+
+    public void addInternationalizableComponent(JTable table, String componentKey, String[] keys) {
+        addInternationalizableComponent(new InternationalizableJTable(componentKey, keys, table));
     }
 
 

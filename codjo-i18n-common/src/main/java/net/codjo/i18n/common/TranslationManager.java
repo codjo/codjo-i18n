@@ -65,4 +65,15 @@ public class TranslationManager {
         }
         throw exception;
     }
+
+
+    public boolean hasKey(String key, Language language) {
+        try {
+            translate(key, language);
+        }
+        catch (MissingResourceException e) {
+            return false;
+        }
+        return true;
+    }
 }
