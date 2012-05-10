@@ -13,7 +13,7 @@
     </parent>
     <groupId>net.codjo.i18n</groupId>
     <artifactId>codjo-i18n</artifactId>
-    <version>1.10</version>
+    <version>1.11-SNAPSHOT</version>
     <dependencyManagement>
         <dependencies>
             <dependency>
